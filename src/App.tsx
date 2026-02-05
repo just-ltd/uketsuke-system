@@ -15,23 +15,47 @@ const emptyData: Partial<UketsukeData> = {
   genbaName: '',
   kenName: '',
   genbaAddress: '',
-  sagyoNaiyo: [
-    { atsusa: '', coaSize: '', honsu: '', kaikouSunpo: '', tokkiJiko: '' },
-  ],
+  sagyoNaiyo: [{ tokkiJiko: '' }],
   machiawaseJikanBasho: '',
   genbaJimushoAri: false,
   memo: '',
 }
 
+// Slack確認通知を送信
+async function sendConfirmToSlack(
+  channelId: string,
+  threadTs: string
+): Promise<boolean> {
+  try {
+    const apiUrl = 'http://localhost:3001/api/confirm'
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ channelId, threadTs }),
+    })
+    const result = await response.json()
+    return result.success
+  } catch (error) {
+    console.error('確認通知の送信に失敗:', error)
+    return false
+  }
+}
+
 // 後方互換性のための従来のページ（?data= パラメータ対応）
 function LegacyPage() {
-  const [initialData, setInitialData] = useState<Partial<UketsukeData>>(emptyData)
+  const [initialData, setInitialData] =
+    useState<Partial<UketsukeData>>(emptyData)
+  const [slackInfo, setSlackInfo] = useState<{
+    channelId: string
+    threadTs: string
+  } | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     // URLパラメータからデータを取得
     const params = new URLSearchParams(window.location.search)
     const dataParam = params.get('data')
+    const slackParam = params.get('slack')
 
     if (dataParam) {
       try {
@@ -43,13 +67,45 @@ function LegacyPage() {
         console.error('データのパースに失敗:', error)
       }
     }
+
+    if (slackParam) {
+      try {
+        const decoded = decodeURIComponent(slackParam)
+        const parsed = JSON.parse(decoded)
+        setSlackInfo(parsed)
+      } catch (error) {
+        console.error('Slack情報のパースに失敗:', error)
+      }
+    }
+
     setLoading(false)
   }, [])
 
   const handleSave = (data: UketsukeData) => {
     console.log('保存データ:', data)
-    // TODO: バックエンドに保存
-    alert('保存しました（実際はサーバーに送信します）')
+    alert('保存しました')
+  }
+
+  const handleConfirm = async (_data: UketsukeData) => {
+    if (!slackInfo) {
+      alert('Slack情報が見つかりません。Slackから開き直してください。')
+      return
+    }
+
+    const confirmed = window.confirm(
+      '受付表の最終確認を行います。Slackスレッドに通知されます。よろしいですか？'
+    )
+    if (!confirmed) return
+
+    const success = await sendConfirmToSlack(
+      slackInfo.channelId,
+      slackInfo.threadTs
+    )
+    if (success) {
+      alert('Slackスレッドに確認通知を送信しました。')
+    } else {
+      alert('通知の送信に失敗しました。Slack Botが起動しているか確認してください。')
+    }
   }
 
   if (loading) {
@@ -68,7 +124,11 @@ function LegacyPage() {
           Slack会話から自動生成された受付表を確認・編集できます
         </p>
       </div>
-      <UketsukeForm initialData={initialData} onSave={handleSave} />
+      <UketsukeForm
+        initialData={initialData}
+        onSave={handleSave}
+        onConfirm={handleConfirm}
+      />
     </div>
   )
 }
@@ -91,9 +151,7 @@ function HomePage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="no-print max-w-4xl mx-auto mb-4 px-4">
         <h1 className="text-2xl font-bold text-gray-800">受付表システム</h1>
-        <p className="text-gray-600 text-sm mt-1">
-          新しい受付表を作成できます
-        </p>
+        <p className="text-gray-600 text-sm mt-1">新しい受付表を作成できます</p>
       </div>
       <UketsukeForm initialData={emptyData} onSave={handleSave} />
     </div>

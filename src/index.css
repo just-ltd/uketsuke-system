@@ -11,9 +11,48 @@ body {
   body {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
+    margin: 0;
+    padding: 0;
   }
 
   .no-print {
     display: none !important;
   }
+
+  /* テキストが枠内で折り返すように */
+  .print-table {
+    table-layout: fixed;
+  }
+
+  .print-table input,
+  .print-table textarea {
+    border: none !important;
+    overflow: visible !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+  }
+
+  .print-table textarea {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* 全てのテキストを折り返す */
+  .print-wrap {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* ページからはみ出さない */
+  .print-table div {
+    overflow: visible !important;
+    word-wrap: break-word !important;
+  }
+}
+
+/* 通常時もテキストエリアの自動リサイズ */
+textarea.print-wrap {
+  overflow: hidden;
 }
