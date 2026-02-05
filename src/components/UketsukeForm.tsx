@@ -343,12 +343,17 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             MEMO
           </div>
           <div className="flex-1 p-2">
+            {/* 編集用textarea（印刷時非表示） */}
             <textarea
               value={data.memo}
               onChange={(e) => handleChange('memo', e.target.value)}
-              className="w-full min-h-24 border border-gray-300 focus:border-blue-500 outline-none resize-none p-1 print-wrap"
+              className="w-full min-h-24 border border-gray-300 focus:border-blue-500 outline-none resize-none p-1 print-wrap no-print"
               rows={5}
             />
+            {/* 印刷用div（通常時非表示、ページ分割可能） */}
+            <div className="hidden print-show whitespace-pre-wrap break-words text-sm">
+              {data.memo}
+            </div>
           </div>
         </div>
       </div>

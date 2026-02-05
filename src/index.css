@@ -19,6 +19,11 @@ body {
     display: none !important;
   }
 
+  /* 印刷時のみ表示 */
+  .print-show {
+    display: block !important;
+  }
+
   /* テキストが枠内で折り返すように */
   .print-table {
     table-layout: fixed;
