@@ -35,7 +35,10 @@ body {
 
   .print-table textarea {
     height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
     overflow: visible !important;
+    field-sizing: content !important;
   }
 
   /* 全てのテキストを折り返す */

@@ -76,11 +76,11 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             JUSTの仕事
           </div>
           <div className="flex-1 p-2 text-center font-bold text-lg">
-            <input
-              type="text"
+            <textarea
               value={data.formTitle || 'レーダー探査受付表'}
               onChange={(e) => handleChange('formTitle', e.target.value)}
-              className="w-full text-center font-bold text-lg border-none outline-none bg-transparent"
+              className="w-full text-center font-bold text-lg border-none outline-none bg-transparent resize-none print-wrap"
+              rows={1}
             />
           </div>
         </div>
@@ -103,11 +103,11 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             受付者
           </div>
           <div className="w-32 p-2 border-r border-black">
-            <input
-              type="text"
+            <textarea
               value={data.uketsukeSha}
               onChange={(e) => handleChange('uketsukeSha', e.target.value)}
-              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none"
+              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none resize-none print-wrap"
+              rows={1}
             />
           </div>
         </div>
@@ -122,12 +122,12 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             受付日
           </div>
           <div className="w-32 p-2 border-r border-black">
-            <input
-              type="text"
+            <textarea
               value={data.uketsukeDate}
               onChange={(e) => handleChange('uketsukeDate', e.target.value)}
-              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none"
+              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none resize-none print-wrap"
               placeholder="令和○年○月○日"
+              rows={1}
             />
           </div>
         </div>
@@ -138,12 +138,12 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             会社住所
           </div>
           <div className="flex-1 p-2">
-            <input
-              type="text"
+            <textarea
               value={data.kaishaAddress}
               onChange={(e) => handleChange('kaishaAddress', e.target.value)}
-              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none print-wrap"
+              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none resize-none print-wrap"
               placeholder="〒"
+              rows={1}
             />
           </div>
         </div>
@@ -169,11 +169,11 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             担当者
           </div>
           <div className="flex-1 p-2 flex items-center gap-2">
-            <input
-              type="text"
+            <textarea
               value={data.tantouSha}
               onChange={(e) => handleChange('tantouSha', e.target.value)}
-              className="flex-1 border-b border-gray-300 focus:border-blue-500 outline-none"
+              className="flex-1 border-b border-gray-300 focus:border-blue-500 outline-none resize-none print-wrap"
+              rows={1}
             />
             <span>様</span>
           </div>
@@ -181,11 +181,11 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             携帯
           </div>
           <div className="w-40 p-2">
-            <input
-              type="text"
+            <textarea
               value={data.keitai}
               onChange={(e) => handleChange('keitai', e.target.value)}
-              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none"
+              className="w-full border-b border-gray-300 focus:border-blue-500 outline-none resize-none print-wrap"
+              rows={1}
             />
           </div>
         </div>
@@ -236,11 +236,11 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
           </div>
           <div className="flex-1 p-2 flex items-center">
             <span className="mr-2">会社</span>
-            <input
-              type="text"
+            <textarea
               value={data.renrakusakiTel}
               onChange={(e) => handleChange('renrakusakiTel', e.target.value)}
-              className="flex-1 border-b border-gray-300 focus:border-blue-500 outline-none"
+              className="flex-1 border-b border-gray-300 focus:border-blue-500 outline-none resize-none print-wrap"
+              rows={1}
             />
           </div>
         </div>
@@ -324,13 +324,13 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             {data.genbaJimushoAri && (
               <>
                 <span>場所:</span>
-                <input
-                  type="text"
+                <textarea
                   value={data.genbaJimushoBasho || ''}
                   onChange={(e) =>
                     handleChange('genbaJimushoBasho', e.target.value)
                   }
-                  className="flex-1 border-b border-gray-300 focus:border-blue-500 outline-none"
+                  className="flex-1 border-b border-gray-300 focus:border-blue-500 outline-none resize-none print-wrap"
+                  rows={1}
                 />
               </>
             )}
@@ -347,7 +347,7 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
               value={data.memo}
               onChange={(e) => handleChange('memo', e.target.value)}
               className="w-full min-h-24 border border-gray-300 focus:border-blue-500 outline-none resize-none p-1 print-wrap"
-              rows={Math.max(3, (data.memo || '').split('\n').length)}
+              rows={5}
             />
           </div>
         </div>
