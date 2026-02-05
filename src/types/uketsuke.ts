@@ -1,6 +1,9 @@
 // 受付表のデータ型定義
 
 export interface UketsukeData {
+  // タイトル
+  formTitle: string // 受付表タイトル（例: "レーダー探査受付表"）
+
   // 基本情報
   jisshiDate: string // 実施日
   uketsukeSha: string // 受付者

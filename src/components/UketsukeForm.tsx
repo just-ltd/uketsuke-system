@@ -8,6 +8,7 @@ interface Props {
 }
 
 const defaultData: UketsukeData = {
+  formTitle: 'レーダー探査受付表',
   jisshiDate: '',
   uketsukeSha: '',
   uketsukeDate: '',
@@ -75,7 +76,12 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             JUSTの仕事
           </div>
           <div className="flex-1 p-2 text-center font-bold text-lg">
-            レーダー探査受付表
+            <input
+              type="text"
+              value={data.formTitle || 'レーダー探査受付表'}
+              onChange={(e) => handleChange('formTitle', e.target.value)}
+              className="w-full text-center font-bold text-lg border-none outline-none bg-transparent"
+            />
           </div>
         </div>
 
@@ -340,7 +346,8 @@ export function UketsukeForm({ initialData, onSave, onConfirm }: Props) {
             <textarea
               value={data.memo}
               onChange={(e) => handleChange('memo', e.target.value)}
-              className="w-full h-24 border border-gray-300 focus:border-blue-500 outline-none resize-none p-1 print-wrap"
+              className="w-full min-h-24 border border-gray-300 focus:border-blue-500 outline-none resize-none p-1 print-wrap"
+              rows={Math.max(3, (data.memo || '').split('\n').length)}
             />
           </div>
         </div>

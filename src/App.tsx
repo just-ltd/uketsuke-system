@@ -6,6 +6,7 @@ import type { UketsukeData } from './types/uketsuke'
 
 // 空のデータ（URLパラメータがない場合）
 const emptyData: Partial<UketsukeData> = {
+  formTitle: 'レーダー探査受付表',
   jisshiDate: '',
   uketsukeSha: '',
   uketsukeDate: '',
